@@ -1,0 +1,618 @@
+/* ---------------------- VARIÁVEIS GLOBAIS ---------------------- */
+:root {
+  /* Cores base */
+  --cor-fundo: #0d0f0d;
+  --cor-fundo-elevado: #141715;
+  --cor-superficie: #181b19;
+  --cor-superficie-hover: #1e2220;
+  --cor-borda: #262b28;
+  --cor-borda-forte: #333a36;
+
+  /* Verde principal (destaque / scouting) */
+  --cor-destaque: #29c46b;
+  --cor-destaque-forte: #22a75c;
+  --cor-destaque-suave: rgba(41, 196, 107, 0.12);
+  --cor-destaque-suave-forte: rgba(41, 196, 107, 0.22);
+
+  /* Textos */
+  --cor-texto-primario: #f2f4f2;
+  --cor-texto-secundario: #a4aca7;
+  --cor-texto-esmaecido: #6d756f;
+
+  /* Estados */
+  --cor-perigo: #e8695f;
+  --cor-perigo-suave: rgba(232, 105, 95, 0.12);
+  --cor-sucesso: var(--cor-destaque);
+
+  /* Tipografia */
+  --fonte-titulo: "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
+  --fonte-texto: "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
+  --fonte-mono: "Consolas", "SFMono-Regular", Menlo, monospace;
+
+  /* Layout */
+  --raio-pequeno: 6px;
+  --raio-medio: 10px;
+  --raio-grande: 14px;
+  --espaco-1: 4px;
+  --espaco-2: 8px;
+  --espaco-3: 12px;
+  --espaco-4: 16px;
+  --espaco-5: 24px;
+  --espaco-6: 32px;
+  --espaco-7: 48px;
+
+  --sombra-cartao: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+  --transicao-rapida: 150ms ease;
+}
+
+/* ---------------------- RESET BÁSICO ---------------------- */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto-primario);
+  font-family: var(--fonte-texto);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* ---------------------- CABEÇALHO ---------------------- */
+.cabecalho-app {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-4);
+  padding: var(--espaco-4) var(--espaco-6);
+  background-color: var(--cor-fundo-elevado);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.cabecalho-app__marca {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-3);
+}
+
+.cabecalho-app__logotipo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--raio-medio);
+  background-color: var(--cor-destaque-suave);
+  color: var(--cor-destaque);
+  flex-shrink: 0;
+}
+
+.cabecalho-app__titulos {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cabecalho-app__titulo {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--cor-texto-primario);
+}
+
+.cabecalho-app__subtitulo {
+  font-size: 12.5px;
+  color: var(--cor-texto-secundario);
+}
+
+.cabecalho-app__indicador {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  font-size: 13px;
+  color: var(--cor-texto-secundario);
+  white-space: nowrap;
+}
+
+.ponto-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--cor-destaque);
+  box-shadow: 0 0 0 4px var(--cor-destaque-suave);
+}
+
+/* ---------------------- LAYOUT PRINCIPAL ---------------------- */
+.conteudo-principal {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: var(--espaco-5);
+  padding: var(--espaco-6);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ---------------------- PAINÉIS / CARTÕES ---------------------- */
+.painel {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-grande);
+  padding: var(--espaco-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-5);
+}
+
+.painel__cabecalho {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}
+
+.painel__cabecalho--com-selo {
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+}
+
+.painel__titulo {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cor-texto-primario);
+}
+
+.painel__subtitulo {
+  font-size: 13px;
+  color: var(--cor-texto-secundario);
+}
+
+.selo-contagem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  height: 28px;
+  padding: 0 var(--espaco-2);
+  border-radius: var(--raio-pequeno);
+  background-color: var(--cor-destaque-suave);
+  color: var(--cor-destaque);
+  font-size: 14px;
+  font-weight: 700;
+  font-family: var(--fonte-mono);
+  flex-shrink: 0;
+}
+
+/* ---------------------- FORMULÁRIO ---------------------- */
+.formulario-jogador {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+}
+
+.linha-formulario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espaco-4);
+}
+
+.grupo-campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+.grupo-campo label,
+.grupo-campo__rotulo {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cor-texto-secundario);
+  letter-spacing: 0.01em;
+}
+
+.grupo-campo input[type="text"],
+.grupo-campo input[type="number"],
+.grupo-campo input[type="date"],
+.grupo-campo select {
+  width: 100%;
+  padding: 10px 12px;
+  background-color: var(--cor-fundo-elevado);
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-pequeno);
+  color: var(--cor-texto-primario);
+  font-size: 14px;
+  font-family: inherit;
+  transition: border-color var(--transicao-rapida), box-shadow var(--transicao-rapida);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.grupo-campo input::placeholder {
+  color: var(--cor-texto-esmaecido);
+}
+
+.grupo-campo input:hover,
+.grupo-campo select:hover {
+  border-color: var(--cor-borda-forte);
+  background-color: var(--cor-superficie-hover);
+}
+
+.grupo-campo input:focus,
+.grupo-campo select:focus {
+  outline: none;
+  border-color: var(--cor-destaque);
+  box-shadow: 0 0 0 3px var(--cor-destaque-suave);
+}
+
+.grupo-campo select {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' stroke='%23a4aca7' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 32px;
+  cursor: pointer;
+}
+
+.grupo-campo select:invalid {
+  color: var(--cor-texto-esmaecido);
+}
+
+.grupo-campo input[type="date"] {
+  color-scheme: dark;
+}
+
+.grupo-campo.erro input,
+.grupo-campo.erro select {
+  border-color: var(--cor-perigo);
+  background-color: var(--cor-perigo-suave);
+}
+
+.grupo-campo.sucesso input,
+.grupo-campo.sucesso select {
+  border-color: var(--cor-destaque);
+}
+
+.mensagem-erro {
+  display: none;
+  font-size: 12px;
+  color: var(--cor-perigo);
+}
+
+.grupo-campo.erro .mensagem-erro {
+  display: block;
+}
+
+/* ---------------------- RADIO BUTTONS ---------------------- */
+.grupo-radio {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espaco-2);
+}
+
+.opcao-radio {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  padding: 8px 14px;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-pequeno);
+  background-color: var(--cor-fundo-elevado);
+  font-size: 13.5px;
+  color: var(--cor-texto-secundario);
+  cursor: pointer;
+  transition: border-color var(--transicao-rapida), background-color var(--transicao-rapida), color var(--transicao-rapida);
+}
+
+.opcao-radio:hover {
+  border-color: var(--cor-borda-forte);
+  background-color: var(--cor-superficie-hover);
+  color: var(--cor-texto-primario);
+}
+
+.opcao-radio input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1.5px solid var(--cor-borda-forte);
+  background-color: var(--cor-fundo);
+  display: inline-grid;
+  place-content: center;
+  margin: 0;
+  flex-shrink: 0;
+  transition: border-color var(--transicao-rapida);
+}
+
+.opcao-radio input[type="radio"]::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--cor-destaque);
+  transform: scale(0);
+  transition: transform var(--transicao-rapida);
+}
+
+.opcao-radio input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+.opcao-radio:has(input[type="radio"]:checked) {
+  border-color: var(--cor-destaque);
+  background-color: var(--cor-destaque-suave);
+  color: var(--cor-texto-primario);
+}
+
+.opcao-radio input[type="radio"]:focus-visible {
+  outline: 2px solid var(--cor-destaque);
+  outline-offset: 2px;
+}
+
+/* ---------------------- CHECKBOXES ---------------------- */
+.grade-checkbox {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--espaco-2);
+}
+
+.opcao-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-2);
+  padding: 8px 12px;
+  border: 1px solid var(--cor-borda-forte);
+  border-radius: var(--raio-pequeno);
+  background-color: var(--cor-fundo-elevado);
+  font-size: 13.5px;
+  color: var(--cor-texto-secundario);
+  cursor: pointer;
+  transition: border-color var(--transicao-rapida), background-color var(--transicao-rapida), color var(--transicao-rapida);
+}
+
+.opcao-checkbox:hover {
+  border-color: var(--cor-borda-forte);
+  background-color: var(--cor-superficie-hover);
+  color: var(--cor-texto-primario);
+}
+
+.opcao-checkbox input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1.5px solid var(--cor-borda-forte);
+  background-color: var(--cor-fundo);
+  display: inline-grid;
+  place-content: center;
+  margin: 0;
+  flex-shrink: 0;
+  transition: border-color var(--transicao-rapida), background-color var(--transicao-rapida);
+}
+
+.opcao-checkbox input[type="checkbox"]::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  background-color: var(--cor-fundo);
+  transform: scale(0);
+  transition: transform var(--transicao-rapida);
+}
+
+.opcao-checkbox input[type="checkbox"]:checked {
+  background-color: var(--cor-destaque);
+  border-color: var(--cor-destaque);
+}
+
+.opcao-checkbox input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+.opcao-checkbox:has(input[type="checkbox"]:checked) {
+  border-color: var(--cor-destaque);
+  background-color: var(--cor-destaque-suave);
+  color: var(--cor-texto-primario);
+}
+
+.opcao-checkbox input[type="checkbox"]:focus-visible {
+  outline: 2px solid var(--cor-destaque);
+  outline-offset: 2px;
+}
+
+/* ---------------------- BOTÕES ---------------------- */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espaco-2);
+  padding: 12px 20px;
+  border: none;
+  border-radius: var(--raio-pequeno);
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--transicao-rapida), transform var(--transicao-rapida), box-shadow var(--transicao-rapida);
+}
+
+.botao--primario {
+  background-color: var(--cor-destaque);
+  color: #06170d;
+}
+
+.botao--primario:hover {
+  background-color: var(--cor-destaque-forte);
+  box-shadow: 0 0 0 4px var(--cor-destaque-suave);
+}
+
+.botao--primario:active {
+  transform: translateY(1px);
+}
+
+.botao--primario:focus-visible {
+  outline: 2px solid var(--cor-texto-primario);
+  outline-offset: 2px;
+}
+
+.botao--bloco {
+  width: 100%;
+  margin-top: var(--espaco-2);
+}
+
+/* ---------------------- LISTA DE JOGADORES ---------------------- */
+.lista-jogadores {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+.cartao-jogador {
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-medio);
+  background-color: var(--cor-fundo-elevado);
+  padding: var(--espaco-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+  transition: border-color var(--transicao-rapida), background-color var(--transicao-rapida), transform var(--transicao-rapida);
+}
+
+.cartao-jogador:hover {
+  border-color: var(--cor-destaque);
+  background-color: var(--cor-superficie-hover);
+  transform: translateY(-2px);
+}
+
+.cartao-jogador__principal {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+}
+
+.cartao-jogador__identidade {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.cartao-jogador__nome {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--cor-texto-primario);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cartao-jogador__secundario {
+  font-size: 12.5px;
+  color: var(--cor-texto-secundario);
+}
+
+.selo {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background-color: var(--cor-destaque-suave);
+  color: var(--cor-destaque);
+  border: 1px solid var(--cor-destaque-suave-forte);
+}
+
+.selo--goleiro {
+  background-color: rgba(164, 172, 167, 0.12);
+  color: var(--cor-texto-secundario);
+  border-color: var(--cor-borda-forte);
+}
+
+.cartao-jogador__detalhes {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--espaco-2) var(--espaco-4);
+  margin: 0;
+  padding-top: var(--espaco-3);
+  border-top: 1px solid var(--cor-borda);
+}
+
+.cartao-jogador__detalhe {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cartao-jogador__detalhe--completo {
+  grid-column: 1 / -1;
+}
+
+.cartao-jogador__detalhe dt {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--cor-texto-esmaecido);
+}
+
+.cartao-jogador__detalhe dd {
+  margin: 0;
+  font-size: 13px;
+  color: var(--cor-texto-primario);
+}
+
+/* ---------------------- RESPONSIVIDADE ---------------------- */
+@media (max-width: 900px) {
+  .conteudo-principal {
+    grid-template-columns: 1fr;
+    padding: var(--espaco-4);
+  }
+
+  .cabecalho-app {
+    padding: var(--espaco-4);
+  }
+}
+
+@media (max-width: 640px) {
+  .cabecalho-app {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--espaco-3);
+  }
+
+  .linha-formulario {
+    grid-template-columns: 1fr;
+  }
+
+  .grade-checkbox {
+    grid-template-columns: 1fr;
+  }
+
+  .cartao-jogador__detalhes {
+    grid-template-columns: 1fr;
+  }
+}
