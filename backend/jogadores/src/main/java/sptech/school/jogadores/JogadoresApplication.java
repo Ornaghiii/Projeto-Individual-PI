@@ -1,13 +1,13 @@
-package school.sptech.exemplo_jdbc;
+package sptech.school.jogadores;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ExemploJdbcApplication {
+public class JogadoresApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ExemploJdbcApplication.class, args);
+		SpringApplication.run(JogadoresApplication.class, args);
 	}
 
 }

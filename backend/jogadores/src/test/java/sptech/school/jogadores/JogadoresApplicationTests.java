@@ -1,10 +1,10 @@
-package school.sptech.exemplo_jdbc;
+package sptech.school.jogadores;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ExemploJdbcApplicationTests {
+class JogadoresApplicationTests {
 
 	@Test
 	void contextLoads() {

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body onload="carregarTimes()">
+<body onload="carregarTimes(); carregarJogadores();">
 
   <!-- ===================== CABEÇALHO ===================== -->
   <header class="cabecalho-app">
@@ -97,13 +97,13 @@
           <label for="posicaoJogador">Posição</label>
           <select id="posicaoJogador" name="posicao-jogador" data-origem="api-posicoes">
             <option value="" selected disabled>Selecione uma posição</option>
-            <option value="goleiro">Goleiro</option>
-            <option value="zagueiro">Zagueiro</option>
-            <option value="lateral">Lateral</option>
-            <option value="volante">Volante</option>
-            <option value="meio-campista">Meio-campista</option>
-            <option value="ponta">Ponta</option>
-            <option value="atacante">Atacante</option>
+            <option value="Goleiro">Goleiro</option>
+            <option value="Zagueiro">Zagueiro</option>
+            <option value="Lateral">Lateral</option>
+            <option value="Volante">Volante</option>
+            <option value="Meio-campista">Meio-campista</option>
+            <option value="Ponta">Ponta</option>
+            <option value="Atacante">Atacante</option>
           </select>
           <span class="mensagem-erro">Selecione uma posição.</span>
         </div>
@@ -112,15 +112,15 @@
           <span class="grupo-campo__rotulo">Pé dominante</span>
           <div class="grupo-radio">
             <label class="opcao-radio">
-              <input type="radio" id="peDireito" name="pe-jogador" value="direito" checked />
+              <input type="radio" id="peDireito" name="pe-jogador" value="Direito" checked />
               <span>Direito</span>
             </label>
             <label class="opcao-radio">
-              <input type="radio" id="peEsquerdo" name="pe-jogador" value="esquerdo" />
+              <input type="radio" id="peEsquerdo" name="pe-jogador" value="Esquerdo" />
               <span>Esquerdo</span>
             </label>
             <label class="opcao-radio">
-              <input type="radio" id="peAmbidestro" name="pe-jogador" value="ambidestro" />
+              <input type="radio" id="peAmbidestro" name="pe-jogador" value="Ambidestro" />
               <span>Ambidestro</span>
             </label>
           </div>
@@ -130,35 +130,35 @@
           <span class="grupo-campo__rotulo">Características</span>
           <div class="grade-checkbox">
             <label class="opcao-checkbox">
-              <input type="checkbox" id="caracteristicaVelocidade" name="caracteristicas-jogador" value="velocidade" />
+              <input type="checkbox" id="caracteristicaVelocidade" name="caracteristicas-jogador" value="Velocidade" />
               <span>Velocidade</span>
             </label>
             <label class="opcao-checkbox">
               <input type="checkbox" id="caracteristicaFinalizacao" name="caracteristicas-jogador"
-                value="finalizacao" />
+                value="Finalização" />
               <span>Finalização</span>
             </label>
             <label class="opcao-checkbox">
-              <input type="checkbox" id="caracteristicaPasse" name="caracteristicas-jogador" value="passe" />
+              <input type="checkbox" id="caracteristicaPasse" name="caracteristicas-jogador" value="Passe" />
               <span>Passe</span>
             </label>
             <label class="opcao-checkbox">
-              <input type="checkbox" id="caracteristicaDrible" name="caracteristicas-jogador" value="drible" />
+              <input type="checkbox" id="caracteristicaDrible" name="caracteristicas-jogador" value="Drible" />
               <span>Drible</span>
             </label>
             <label class="opcao-checkbox">
-              <input type="checkbox" id="caracteristicaMarcacao" name="caracteristicas-jogador" value="marcacao" />
+              <input type="checkbox" id="caracteristicaMarcacao" name="caracteristicas-jogador" value="Marcação" />
               <span>Marcação</span>
             </label>
             <label class="opcao-checkbox">
               <input type="checkbox" id="caracteristicaForcaFisica" name="caracteristicas-jogador"
-                value="forca-fisica" />
+                value="Força Fisica" />
               <span>Força física</span>
             </label>
           </div>
         </div>
 
-        <button type="submit" class="botao botao--primario botao--bloco" id="cadastrarJogador">
+        <button type="button" class="botao botao--primario botao--bloco" id="btnCadastrarJogador" onclick="cadastrarJogador()">
           Cadastrar jogador
         </button>
       </form>
@@ -183,6 +183,142 @@
 
   </main>
 
+  <!-- ===================== MODAL: EDITAR JOGADOR ===================== -->
+  <div class="modal-fundo" id="modalEditarJogador">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="tituloModalEditar">
+      <div class="modal__cabecalho">
+        <h2 class="modal__titulo" id="tituloModalEditar">Editar jogador</h2>
+        <button type="button" class="modal__fechar" onclick="fecharModalEdicao()" aria-label="Fechar">
+          &times;
+        </button>
+      </div>
+
+      <div class="modal__corpo">
+        <input type="hidden" id="editarJogadorId" />
+
+        <div class="grupo-campo">
+          <label for="editarNomeJogador">Nome do jogador</label>
+          <input type="text" id="editarNomeJogador" autocomplete="off" />
+          <span class="mensagem-erro">Informe o nome do jogador.</span>
+        </div>
+
+        <div class="linha-formulario">
+          <div class="grupo-campo">
+            <label for="editarNumeroJogador">Número da camisa</label>
+            <input type="number" id="editarNumeroJogador" min="1" max="99" />
+            <span class="mensagem-erro">Informe um número válido.</span>
+          </div>
+
+          <div class="grupo-campo">
+            <label for="editarDataNascimentoJogador">Data de nascimento</label>
+            <input type="date" id="editarDataNascimentoJogador" />
+            <span class="mensagem-erro">Informe a data de nascimento.</span>
+          </div>
+        </div>
+
+        <div class="grupo-campo">
+          <span class="grupo-campo__rotulo">Sexo</span>
+          <div class="grupo-radio">
+            <label class="opcao-radio">
+              <input type="radio" id="editarSexoMasculino" name="editar-sexo-jogador" value="masculino" />
+              <span>Masculino</span>
+            </label>
+            <label class="opcao-radio">
+              <input type="radio" id="editarSexoFeminino" name="editar-sexo-jogador" value="feminino" />
+              <span>Feminino</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="grupo-campo">
+          <label for="editarTimeJogador">Time</label>
+          <select id="editarTimeJogador">
+            <option value="" disabled>Selecione um time</option>
+            <option value="corinthians">Corinthians</option>
+            <option value="palmeiras">Palmeiras</option>
+            <option value="sao-paulo">São Paulo</option>
+            <option value="santos">Santos</option>
+            <option value="flamengo">Flamengo</option>
+            <option value="internacional">Internacional</option>
+          </select>
+          <span class="mensagem-erro">Selecione um time.</span>
+        </div>
+
+        <div class="grupo-campo">
+          <label for="editarPosicaoJogador">Posição</label>
+          <select id="editarPosicaoJogador">
+            <option value="" disabled>Selecione uma posição</option>
+            <option value="Goleiro">Goleiro</option>
+            <option value="Zagueiro">Zagueiro</option>
+            <option value="Lateral">Lateral</option>
+            <option value="Volante">Volante</option>
+            <option value="Meio-campista">Meio-campista</option>
+            <option value="Ponta">Ponta</option>
+            <option value="Atacante">Atacante</option>
+          </select>
+          <span class="mensagem-erro">Selecione uma posição.</span>
+        </div>
+
+        <div class="grupo-campo">
+          <span class="grupo-campo__rotulo">Pé dominante</span>
+          <div class="grupo-radio">
+            <label class="opcao-radio">
+              <input type="radio" id="editarPeDireito" name="editar-pe-jogador" value="Direito" />
+              <span>Direito</span>
+            </label>
+            <label class="opcao-radio">
+              <input type="radio" id="editarPeEsquerdo" name="editar-pe-jogador" value="Esquerdo" />
+              <span>Esquerdo</span>
+            </label>
+            <label class="opcao-radio">
+              <input type="radio" id="editarPeAmbidestro" name="editar-pe-jogador" value="Ambidestro" />
+              <span>Ambidestro</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="grupo-campo">
+          <span class="grupo-campo__rotulo">Características</span>
+          <div class="grade-checkbox">
+            <label class="opcao-checkbox">
+              <input type="checkbox" id="editarCaracteristicaVelocidade" value="Velocidade" />
+              <span>Velocidade</span>
+            </label>
+            <label class="opcao-checkbox">
+              <input type="checkbox" id="editarCaracteristicaFinalizacao" value="Finalização" />
+              <span>Finalização</span>
+            </label>
+            <label class="opcao-checkbox">
+              <input type="checkbox" id="editarCaracteristicaPasse" value="Passe" />
+              <span>Passe</span>
+            </label>
+            <label class="opcao-checkbox">
+              <input type="checkbox" id="editarCaracteristicaDrible" value="Drible" />
+              <span>Drible</span>
+            </label>
+            <label class="opcao-checkbox">
+              <input type="checkbox" id="editarCaracteristicaMarcacao" value="Marcação" />
+              <span>Marcação</span>
+            </label>
+            <label class="opcao-checkbox">
+              <input type="checkbox" id="editarCaracteristicaForcaFisica" value="Força Fisica" />
+              <span>Força física</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal__rodape">
+        <button type="button" class="botao botao--secundario" onclick="fecharModalEdicao()">
+          Cancelar
+        </button>
+        <button type="button" class="botao botao--primario" onclick="salvarEdicaoJogador()">
+          Salvar alterações
+        </button>
+      </div>
+    </div>
+  </div>
+
 </body>
 
 </html>
@@ -191,9 +327,9 @@
 
   function cadastrarJogador() {
 
-    var nomeJogador = nomeJogador.value
-    var numeroJogador = numeroJogador.value
-    var dtNasc = dataNascimentoJogador.value
+    var nomeJogador = document.getElementById("nomeJogador").value;
+    var numeroJogador = document.getElementById("numeroJogador").value;
+    var dtNasc = document.getElementById("dataNascimentoJogador").value;
 
     var sexoMasculino = document.getElementById("sexoMasculino");
     var sexoFeminino = document.getElementById("sexoFeminino");
@@ -263,20 +399,20 @@
 
 
 
-    fetch("http://localhost:8080/jogador", {
+    fetch("http://localhost:8080/jogadores", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        jogadorServer: nomeJogador,
-        numeroServer: numeroJogador,
-        dataServer: dtNasc,
-        sexoServer: sexoSelecionado,
-        peSever: peDominante,
-        timeServer: time,
-        posicaoServer: posicao,
-        caracteristicasServer: caracteristicasString
+        nome: nomeJogador,
+        numero: numeroJogador,
+        dtNasc: dtNasc,
+        sexo: sexoSelecionado,
+        time: time,
+        posicao: posicao,
+        pe: peDominante,
+        caracteristicas: caracteristicasString
       })
     })
       .then(resposta => {
@@ -292,6 +428,8 @@
 
             setTimeout(function () {
             }, 1000);
+
+             carregarJogadores();
 
           });
 
@@ -309,19 +447,27 @@
       return response.json();
     })
     .then(function (times) {
-      var selectTime = document.getElementById("timeJogador");
+      var selects = [
+        document.getElementById("timeJogador"),
+        document.getElementById("editarTimeJogador")
+      ];
 
       times.forEach(function (time) {
-        var option = document.createElement("option");
-        option.value = time.id;
-        option.textContent = time.nome;
-        selectTime.appendChild(option);
+        selects.forEach(function (select) {
+          var option = document.createElement("option");
+          option.value = time.nome;
+          option.textContent = time.nome;
+          select.appendChild(option);
+        });
       });
     })
     .catch(function (erro) {
       console.error("Erro ao carregar times:", erro);
     });
 }
+
+
+var jogadoresCache = [];
 
 function carregarJogadores() {
   fetch("http://localhost:8080/jogadores")
@@ -332,7 +478,8 @@ function carregarJogadores() {
       var listaJogadores = document.getElementById("listaJogadoresRegistrados");
       var contagemJogadores = document.getElementById("contagemJogadores");
 
-      // limpa a lista antes de recriar (evita duplicar em recarregamentos)
+      jogadoresCache = jogadores;
+
       listaJogadores.innerHTML = "";
 
       jogadores.forEach(function (jogador) {
@@ -350,6 +497,7 @@ function carregarJogadores() {
 function criarCardJogador(jogador) {
   var artigo = document.createElement("article");
   artigo.className = "cartao-jogador";
+  artigo.setAttribute("data-jogador-id", jogador.id);
 
   var caracteristicasArray = jogador.caracteristicas.split(",");
   var caracteristicasTexto = caracteristicasArray.join(", ");
@@ -374,15 +522,178 @@ function criarCardJogador(jogador) {
       '</div>' +
       '<div class="cartao-jogador__detalhe">' +
         '<dt>Pé</dt>' +
-        '<dd>' + jogador.peDominante + '</dd>' +
+        '<dd>' + jogador.pe + '</dd>' +
       '</div>' +
       '<div class="cartao-jogador__detalhe cartao-jogador__detalhe--completo">' +
         '<dt>Características</dt>' +
         '<dd>' + caracteristicasTexto + '</dd>' +
       '</div>' +
-    '</dl>';
+    '</dl>' +
+    '<div class="cartao-jogador__acoes">' +
+      '<button type="button" class="botao-acao botao-acao--editar" onclick="editarJogador(' + jogador.id + ')">Editar</button>' +
+      '<button type="button" class="botao-acao botao-acao--remover" onclick="removerJogador(' + jogador.id + ')">Remover</button>' +
+    '</div>';
 
   return artigo;
+}
+
+function editarJogador(id) {
+  var jogador = jogadoresCache.find(function (item) {
+    return item.id == id;
+  });
+
+  if (!jogador) {
+    console.error("Jogador não encontrado no cache:", id);
+    return;
+  }
+
+  preencherModalEdicao(jogador);
+  abrirModalEdicao();
+}
+
+function preencherModalEdicao(jogador) {
+  document.getElementById("editarJogadorId").value = jogador.id;
+  document.getElementById("editarNomeJogador").value = jogador.nome;
+  document.getElementById("editarNumeroJogador").value = jogador.numero;
+  document.getElementById("editarDataNascimentoJogador").value = jogador.dtNasc;
+  document.getElementById("editarTimeJogador").value = jogador.time;
+  document.getElementById("editarPosicaoJogador").value = jogador.posicao;
+
+  // Sexo
+  document.getElementById("editarSexoMasculino").checked = jogador.sexo === "masculino";
+  document.getElementById("editarSexoFeminino").checked = jogador.sexo === "feminino";
+
+  // Pé dominante
+  document.getElementById("editarPeDireito").checked = jogador.pe === "Direito";
+  document.getElementById("editarPeEsquerdo").checked = jogador.pe === "Esquerdo";
+  document.getElementById("editarPeAmbidestro").checked = jogador.pe === "Ambidestro";
+
+  // Características (vem como string separada por vírgula, ex: "Velocidade,Passe")
+  var caracteristicasArray = jogador.caracteristicas.split(",");
+
+  document.getElementById("editarCaracteristicaVelocidade").checked = caracteristicasArray.includes("Velocidade");
+  document.getElementById("editarCaracteristicaFinalizacao").checked = caracteristicasArray.includes("Finalização");
+  document.getElementById("editarCaracteristicaPasse").checked = caracteristicasArray.includes("Passe");
+  document.getElementById("editarCaracteristicaDrible").checked = caracteristicasArray.includes("Drible");
+  document.getElementById("editarCaracteristicaMarcacao").checked = caracteristicasArray.includes("Marcação");
+  document.getElementById("editarCaracteristicaForcaFisica").checked = caracteristicasArray.includes("Força Fisica");
+}
+
+function abrirModalEdicao() {
+  document.getElementById("modalEditarJogador").classList.add("modal-fundo--aberto");
+}
+
+function fecharModalEdicao() {
+  document.getElementById("modalEditarJogador").classList.remove("modal-fundo--aberto");
+}
+
+function salvarEdicaoJogador() {
+  var id = document.getElementById("editarJogadorId").value;
+
+  var nomeJogador = document.getElementById("editarNomeJogador").value;
+  var numeroJogador = document.getElementById("editarNumeroJogador").value;
+  var dtNasc = document.getElementById("editarDataNascimentoJogador").value;
+  var time = document.getElementById("editarTimeJogador").value;
+  var posicao = document.getElementById("editarPosicaoJogador").value;
+
+  var sexoSelecionado = null;
+  if (document.getElementById("editarSexoMasculino").checked) {
+    sexoSelecionado = document.getElementById("editarSexoMasculino").value;
+  } else if (document.getElementById("editarSexoFeminino").checked) {
+    sexoSelecionado = document.getElementById("editarSexoFeminino").value;
+  }
+
+  var peDominante = null;
+  if (document.getElementById("editarPeDireito").checked) {
+    peDominante = document.getElementById("editarPeDireito").value;
+  } else if (document.getElementById("editarPeEsquerdo").checked) {
+    peDominante = document.getElementById("editarPeEsquerdo").value;
+  } else if (document.getElementById("editarPeAmbidestro").checked) {
+    peDominante = document.getElementById("editarPeAmbidestro").value;
+  }
+
+  var caracteristicas = [];
+
+  if (document.getElementById("editarCaracteristicaVelocidade").checked) {
+    caracteristicas.push("Velocidade");
+  }
+  if (document.getElementById("editarCaracteristicaFinalizacao").checked) {
+    caracteristicas.push("Finalização");
+  }
+  if (document.getElementById("editarCaracteristicaPasse").checked) {
+    caracteristicas.push("Passe");
+  }
+  if (document.getElementById("editarCaracteristicaDrible").checked) {
+    caracteristicas.push("Drible");
+  }
+  if (document.getElementById("editarCaracteristicaMarcacao").checked) {
+    caracteristicas.push("Marcação");
+  }
+  if (document.getElementById("editarCaracteristicaForcaFisica").checked) {
+    caracteristicas.push("Força Fisica");
+  }
+
+  var caracteristicasString = caracteristicas.join(",");
+
+  if (
+    nomeJogador == "" ||
+    numeroJogador == "" ||
+    dtNasc == "" ||
+    sexoSelecionado == null ||
+    time == "" ||
+    posicao == "" ||
+    peDominante == null ||
+    caracteristicas.length === 0
+  ) {
+    alert("Preencha todos os campos para prosseguir");
+    return;
+  }
+
+  fetch("http://localhost:8080/jogadores/" + id, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      nome: nomeJogador,
+      numero: numeroJogador,
+      dtNasc: dtNasc,
+      sexo: sexoSelecionado,
+      time: time,
+      posicao: posicao,
+      pe: peDominante,
+      caracteristicas: caracteristicasString
+    })
+  })
+    .then(function (resposta) {
+      if (resposta.ok) {
+        fecharModalEdicao();
+        carregarJogadores();
+      }
+    })
+    .catch(function (erro) {
+      console.error("Erro ao salvar edição do jogador:", erro);
+    });
+}
+
+function removerJogador(id) {
+  var confirmarRemocao = confirm("Tem certeza que deseja remover este jogador?");
+
+  if (!confirmarRemocao) {
+    return;
+  }
+
+  fetch("http://localhost:8080/jogadores/" + id, {
+    method: "DELETE"
+  })
+    .then(function (resposta) {
+      if (resposta.ok) {
+        carregarJogadores(); 
+      }
+    })
+    .catch(function (erro) {
+      console.error("Erro ao remover jogador:", erro);
+    });
 }
 
 </script>

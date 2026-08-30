@@ -8,28 +8,23 @@
   --cor-borda: #262b28;
   --cor-borda-forte: #333a36;
 
-  /* Verde principal (destaque / scouting) */
   --cor-destaque: #29c46b;
   --cor-destaque-forte: #22a75c;
   --cor-destaque-suave: rgba(41, 196, 107, 0.12);
   --cor-destaque-suave-forte: rgba(41, 196, 107, 0.22);
 
-  /* Textos */
   --cor-texto-primario: #f2f4f2;
   --cor-texto-secundario: #a4aca7;
   --cor-texto-esmaecido: #6d756f;
 
-  /* Estados */
   --cor-perigo: #e8695f;
   --cor-perigo-suave: rgba(232, 105, 95, 0.12);
   --cor-sucesso: var(--cor-destaque);
 
-  /* Tipografia */
   --fonte-titulo: "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
   --fonte-texto: "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
   --fonte-mono: "Consolas", "SFMono-Regular", Menlo, monospace;
 
-  /* Layout */
   --raio-pequeno: 6px;
   --raio-medio: 10px;
   --raio-grande: 14px;
@@ -45,7 +40,6 @@
   --transicao-rapida: 150ms ease;
 }
 
-/* ---------------------- RESET BÁSICO ---------------------- */
 * {
   box-sizing: border-box;
 }
@@ -80,7 +74,6 @@ button {
   font-family: inherit;
 }
 
-/* ---------------------- CABEÇALHO ---------------------- */
 .cabecalho-app {
   display: flex;
   align-items: center;
@@ -144,7 +137,6 @@ button {
   box-shadow: 0 0 0 4px var(--cor-destaque-suave);
 }
 
-/* ---------------------- LAYOUT PRINCIPAL ---------------------- */
 .conteudo-principal {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
@@ -154,7 +146,6 @@ button {
   margin: 0 auto;
 }
 
-/* ---------------------- PAINÉIS / CARTÕES ---------------------- */
 .painel {
   background-color: var(--cor-superficie);
   border: 1px solid var(--cor-borda);
@@ -205,7 +196,6 @@ button {
   flex-shrink: 0;
 }
 
-/* ---------------------- FORMULÁRIO ---------------------- */
 .formulario-jogador {
   display: flex;
   flex-direction: column;
@@ -303,7 +293,6 @@ button {
   display: block;
 }
 
-/* ---------------------- RADIO BUTTONS ---------------------- */
 .grupo-radio {
   display: flex;
   flex-wrap: wrap;
@@ -442,7 +431,6 @@ button {
   outline-offset: 2px;
 }
 
-/* ---------------------- BOTÕES ---------------------- */
 .botao {
   display: inline-flex;
   align-items: center;
@@ -481,7 +469,6 @@ button {
   margin-top: var(--espaco-2);
 }
 
-/* ---------------------- LISTA DE JOGADORES ---------------------- */
 .lista-jogadores {
   display: flex;
   flex-direction: column;
@@ -585,7 +572,140 @@ button {
   color: var(--cor-texto-primario);
 }
 
-/* ---------------------- RESPONSIVIDADE ---------------------- */
+.cartao-jogador__acoes {
+  display: flex;
+  gap: var(--espaco-2);
+  padding-top: var(--espaco-3);
+  border-top: 1px solid var(--cor-borda);
+}
+
+.botao-acao {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: var(--raio-pequeno);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid var(--cor-borda-forte);
+  color: var(--cor-texto-secundario);
+  transition: background-color var(--transicao-rapida), border-color var(--transicao-rapida), color var(--transicao-rapida);
+}
+
+.botao-acao--editar:hover {
+  border-color: var(--cor-destaque);
+  color: var(--cor-destaque);
+  background-color: var(--cor-destaque-suave);
+}
+
+.botao-acao--editar:focus-visible {
+  outline: 2px solid var(--cor-destaque);
+  outline-offset: 2px;
+}
+
+.botao-acao--remover:hover {
+  border-color: var(--cor-perigo);
+  color: var(--cor-perigo);
+  background-color: var(--cor-perigo-suave);
+}
+
+.botao-acao--remover:focus-visible {
+  outline: 2px solid var(--cor-perigo);
+  outline-offset: 2px;
+}
+
+.modal-fundo {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  align-items: center;
+  justify-content: center;
+  padding: var(--espaco-4);
+  z-index: 100;
+}
+
+.modal-fundo--aberto {
+  display: flex;
+}
+
+.modal {
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-grande);
+  box-shadow: var(--sombra-cartao);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espaco-3);
+  padding: var(--espaco-5) var(--espaco-5) var(--espaco-4);
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.modal__titulo {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cor-texto-primario);
+}
+
+.modal__fechar {
+  background: transparent;
+  border: none;
+  color: var(--cor-texto-secundario);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: var(--espaco-1) var(--espaco-2);
+  border-radius: var(--raio-pequeno);
+  transition: background-color var(--transicao-rapida), color var(--transicao-rapida);
+}
+
+.modal__fechar:hover {
+  background-color: var(--cor-superficie-hover);
+  color: var(--cor-texto-primario);
+}
+
+.modal__corpo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-4);
+  padding: var(--espaco-5);
+}
+
+.modal__rodape {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--espaco-2);
+  padding: var(--espaco-4) var(--espaco-5) var(--espaco-5);
+  border-top: 1px solid var(--cor-borda);
+}
+
+.modal__rodape .botao {
+  width: auto;
+  margin-top: 0;
+}
+
+.botao--secundario {
+  background-color: transparent;
+  border: 1px solid var(--cor-borda-forte);
+  color: var(--cor-texto-secundario);
+}
+
+.botao--secundario:hover {
+  border-color: var(--cor-borda-forte);
+  background-color: var(--cor-superficie-hover);
+  color: var(--cor-texto-primario);
+}
+
 @media (max-width: 900px) {
   .conteudo-principal {
     grid-template-columns: 1fr;

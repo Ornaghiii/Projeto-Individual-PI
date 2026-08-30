@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>4.1.0</version>
+		<version>4.1.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>school.sptech</groupId>
-	<artifactId>exemplo-jdbc</artifactId>
+	<groupId>sptech.school</groupId>
+	<artifactId>jogadores</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name/>
 	<description/>
